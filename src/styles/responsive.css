@@ -1,0 +1,366 @@
+/* تحسينات الاستجابة للأجهزة المختلفة */
+
+/* متغيرات CSS للأجهزة المختلفة */
+:root {
+  --touch-target-size: 32px;
+  --font-size-base: 16px;
+  --spacing-unit: 16px;
+  --board-size: min(60vw, 80vh);
+  --piece-size: 6vw;
+  --transition-duration: 0.3s;
+  --animation-duration: 0.5s;
+  --tv-scale-factor: 1;
+}
+
+/* تحسينات الهاتف المحمول */
+.device-mobile {
+  --touch-target-size: 48px;
+  --font-size-base: 16px;
+  --spacing-unit: 8px;
+  --board-size: min(90vw, 90vh);
+  --piece-size: 12vw;
+}
+
+.device-mobile .chess-board {
+  margin: 0 auto;
+  max-width: 100vw;
+}
+
+.device-mobile .game-controls {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.device-mobile .game-controls button {
+  min-height: var(--touch-target-size);
+  font-size: 14px;
+  padding: 12px 16px;
+}
+
+.device-mobile .move-history {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* تحسينات الجهاز اللوحي */
+.device-tablet {
+  --touch-target-size: 44px;
+  --font-size-base: 18px;
+  --spacing-unit: 12px;
+  --board-size: min(70vw, 80vh);
+  --piece-size: 8vw;
+}
+
+.device-tablet .main-content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+}
+
+.device-tablet .chess-board {
+  justify-self: center;
+}
+
+.device-tablet .game-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* تحسينات سطح المكتب */
+.device-desktop {
+  --touch-target-size: 32px;
+  --font-size-base: 16px;
+  --spacing-unit: 16px;
+  --board-size: min(60vw, 80vh);
+  --piece-size: 6vw;
+}
+
+.device-desktop .main-content {
+  display: grid;
+  grid-template-columns: 300px 1fr 300px;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.device-desktop .chess-board {
+  justify-self: center;
+}
+
+.device-desktop .game-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* تحسينات التلفزيون */
+.device-tv {
+  --touch-target-size: 60px;
+  --font-size-base: 24px;
+  --spacing-unit: 24px;
+  --board-size: min(50vw, 70vh);
+  --piece-size: 5vw;
+}
+
+.tv-mode {
+  font-size: calc(var(--font-size-base) * var(--tv-scale-factor));
+  line-height: 1.6;
+}
+
+.tv-mode .main-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 40px;
+  padding: 40px;
+}
+
+.tv-mode .chess-board {
+  transform: scale(var(--tv-scale-factor));
+  transform-origin: center;
+}
+
+.tv-mode button {
+  min-height: var(--touch-target-size);
+  font-size: calc(var(--font-size-base) * 0.9);
+  padding: 16px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.tv-mode *:focus {
+  outline: 3px solid #007bff !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 6px rgba(0, 123, 255, 0.25) !important;
+}
+
+.tv-mode .chess-square:focus {
+  background-color: rgba(0, 123, 255, 0.3) !important;
+  transform: scale(1.05) !important;
+  transition: all 0.2s ease;
+}
+
+/* تحسينات اللمس */
+.touch-enabled {
+  --min-touch-target: 44px;
+  --touch-spacing: 8px;
+}
+
+.touch-enabled button,
+.touch-enabled .clickable {
+  min-height: var(--min-touch-target);
+  min-width: var(--min-touch-target);
+  margin: var(--touch-spacing);
+}
+
+.touch-enabled .chess-square {
+  min-height: calc(var(--piece-size) + 8px);
+  min-width: calc(var(--piece-size) + 8px);
+}
+
+.touch-optimized .chess-board {
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.touch-optimized .chess-square {
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.touch-optimized .chess-square:active {
+  transform: scale(0.95);
+}
+
+/* تحسينات الشاشات عالية الدقة */
+.high-dpi {
+  --image-quality: high;
+  --font-smoothing: antialiased;
+}
+
+.high-dpi * {
+  -webkit-font-smoothing: var(--font-smoothing);
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.high-dpi .chess-piece {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* تقليل الحركة */
+.reduced-motion {
+  --transition-duration: 0s;
+  --animation-duration: 0s;
+}
+
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: var(--animation-duration) !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: var(--transition-duration) !important;
+}
+
+/* أحجام الشاشات */
+.screen-small {
+  font-size: 14px;
+}
+
+.screen-medium {
+  font-size: 16px;
+}
+
+.screen-large {
+  font-size: 18px;
+}
+
+.screen-xlarge {
+  font-size: 20px;
+}
+
+/* تحسينات الاتجاه */
+@media (orientation: portrait) {
+  .device-mobile .main-content,
+  .device-tablet .main-content {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+  
+  .device-mobile .chess-board,
+  .device-tablet .chess-board {
+    --board-size: min(90vw, 60vh);
+  }
+}
+
+@media (orientation: landscape) {
+  .device-mobile .main-content {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+  
+  .device-mobile .chess-board {
+    --board-size: min(60vw, 90vh);
+  }
+}
+
+/* تحسينات إمكانية الوصول */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .chess-square.light {
+    background-color: #ffffff !important;
+    border: 2px solid #000000;
+  }
+  
+  .chess-square.dark {
+    background-color: #000000 !important;
+    border: 2px solid #ffffff;
+  }
+}
+
+/* تحسينات الطباعة */
+@media print {
+  .game-controls,
+  .navigation,
+  .sound-controls {
+    display: none !important;
+  }
+  
+  .chess-board {
+    --board-size: 80vw;
+    page-break-inside: avoid;
+  }
+}
+
+/* تحسينات الشاشات الصغيرة جداً */
+@media (max-width: 320px) {
+  .device-mobile {
+    --font-size-base: 14px;
+    --spacing-unit: 6px;
+    --board-size: 95vw;
+  }
+  
+  .device-mobile .game-controls button {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}
+
+/* تحسينات الشاشات الكبيرة جداً */
+@media (min-width: 2560px) {
+  .device-desktop,
+  .device-tv {
+    --font-size-base: 20px;
+    --spacing-unit: 20px;
+  }
+  
+  .main-content {
+    max-width: 2000px;
+  }
+}
+
+/* تحسينات خاصة بالتلفزيون */
+@media (min-width: 1920px) and (min-height: 1080px) {
+  .tv-mode .main-content {
+    padding: 60px;
+    gap: 60px;
+  }
+  
+  .tv-mode .chess-board {
+    --board-size: min(40vw, 60vh);
+  }
+  
+  .tv-mode .game-info {
+    font-size: 18px;
+  }
+  
+  .tv-mode .move-history {
+    max-height: 400px;
+    font-size: 16px;
+  }
+}
+
+/* تحسينات الألوان للوضع المظلم */
+.dark .tv-mode *:focus {
+  outline-color: #4dabf7 !important;
+  box-shadow: 0 0 0 6px rgba(77, 171, 247, 0.25) !important;
+}
+
+.dark .chess-square:focus {
+  background-color: rgba(77, 171, 247, 0.3) !important;
+}
+
+/* تحسينات الأداء */
+.chess-board {
+  will-change: transform;
+  contain: layout style paint;
+}
+
+.chess-piece {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* تحسينات التمرير */
+.scrollable {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* تحسينات التركيز للوحة المفاتيح */
+.keyboard-navigation *:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+.keyboard-navigation .chess-square:focus {
+  background-color: rgba(0, 123, 255, 0.2);
+  transform: scale(1.02);
+}
